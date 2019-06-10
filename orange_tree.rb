@@ -37,36 +37,53 @@ class NoOrangesError < StandardError
 end
 
 class OrangeTree
-
+attr_accessor :height, :age
   # Constructor for the tree
   def initialize
-    # constructor code goes here
+    @height = 0
+    @age = 0
+    @orange = []
   end
 
   # Ages the tree one year
   def age!
     #tree aging code goes here
+      if @age < 30
+        @age += 1
+        @height += rand(80..120)
+        rand(700..1250).times do |o|
+          o = Orange.new
+          @orange << o
+        end
+      else @age += 1
+      end
   end
 
   # Returns +true+ if there are any oranges on the tree, +false+ otherwise
   def any_oranges?
     # code to check if tree has any oranges goes here
+    @orange.length > 0 ? true : false
   end
 
   def dead?
     # check if tree is dead code goes here
+     @age > 25 ? true : false
   end
 
   # Returns an Orange if there are any
   # Raises a NoOrangesError otherwise
   def pick_an_orange!
     # orange-picking logic goes here
+    @orange.pop
   end
 end
 
 class Orange
   # Initializes a new Orange with diameter +diameter+
-end
+  attr_accessor :diamater
+  def initialize
+    @diamater = rand(20..50)
+  end
 
 tree = OrangeTree.new
 
@@ -94,5 +111,5 @@ until tree.dead?
   #Age the tree another year
   tree.age!
 end
-
+end
 puts "Alas, the tree, she is dead!"
